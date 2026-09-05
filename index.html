@@ -109,18 +109,18 @@
                     <span class="px-3 py-1 text-xs font-semibold bg-brand-500/10 text-brand-400 rounded-full border border-brand-500/20">Olá, Adriele! 👋</span>
                     <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-3">Sua Central de Acesso Rápido</h2>
                     <p class="text-gray-400 mt-2 max-w-2xl text-sm sm:text-base leading-relaxed">
-                        Gerencie e acesse instantaneamente os repositórios oficiais e as páginas ao vivo dos seus 50 projetos desenvolvidos no ecossistema Descodificado.
+                        Gerencie e acesse instantaneamente os repositórios oficiais e as páginas ao vivo dos seus 61 projetos desenvolvidos no ecossistema Descodificado.
                     </p>
                 </div>
                 
                 <!-- Cards de Estatísticas -->
                 <div class="grid grid-cols-2 gap-4 sm:min-w-[280px]">
                     <div class="bg-gray-900/60 border border-gray-800 p-4 rounded-xl text-center">
-                        <span class="text-3xl font-bold text-white block" id="stat-total-projects">50</span>
+                        <span class="text-3xl font-bold text-white block" id="stat-total-projects">61</span>
                         <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Projetos</span>
                     </div>
                     <div class="bg-gray-900/60 border border-gray-800 p-4 rounded-xl text-center">
-                        <span class="text-3xl font-bold text-brand-400 block" id="stat-github">50</span>
+                        <span class="text-3xl font-bold text-brand-400 block" id="stat-github">61</span>
                         <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Código GitHub</span>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
 
     <!-- Script de Dados & Lógicas -->
     <script>
-        // Array com todos os 50 projetos catalogados
+        // Array com todos os 61 projetos catalogados
         const rawProjectsData = [
             { id: 1, name: "Treinamento Ao Vivo", descodificado: "https://www.descodificado.com.br/Treinamento-Ao-Vivo/", github: "https://github.com/Adriele-Almeida/Treinamento-Ao-Vivo" },
             { id: 2, name: "Novo", descodificado: "https://www.descodificado.com.br/novo/", github: "https://github.com/Adriele-Almeida/novo" },
@@ -253,7 +253,7 @@
             { id: 36, name: "3", descodificado: "https://www.descodificado.com.br/3/", github: "https://github.com/Adriele-Almeida/3" },
             { id: 37, name: "1", descodificado: "https://www.descodificado.com.br/1/", github: "https://github.com/Adriele-Almeida/1" },
             { id: 38, name: "Template Automático", descodificado: "https://www.descodificado.com.br/template-automatico/", github: "https://github.com/Adriele-Almeida/template-automatico" },
-            { id: 39, name: "Rascunho 01", descodificado: "https://www.descodificado.com.br/rascunho-01/", github: "https://github.com/Adriele-Almeida/rascunho-01" },
+            { id: 39, name: "Guia Prático Instagram 2026", descodificado: "https://www.descodificado.com.br/rascunho-01/", github: "https://github.com/Adriele-Almeida/rascunho-01" },
             { id: 40, name: "Story Template", descodificado: "https://www.descodificado.com.br/story-template/", github: "https://github.com/Adriele-Almeida/story-template" },
             { id: 41, name: "Produtividade 2", descodificado: "https://www.descodificado.com.br/produtividade2/", github: "https://github.com/Adriele-Almeida/produtividade2" },
             { id: 42, name: "GPTs", descodificado: "https://www.descodificado.com.br/gpts/", github: "https://github.com/Adriele-Almeida/gpts" },
@@ -264,7 +264,18 @@
             { id: 47, name: "30 Dias Positivo", descodificado: "https://www.descodificado.com.br/30-dias-positivo/", github: "https://github.com/Adriele-Almeida/30-dias-positivo" },
             { id: 48, name: "Card Estúdio", descodificado: "https://www.descodificado.com.br/card-estudio/", github: "https://github.com/Adriele-Almeida/card-estudio" },
             { id: 49, name: "Público Renda Extra", descodificado: "https://www.descodificado.com.br/Publico-Renda-extra/", github: "https://github.com/Adriele-Almeida/Publico-Renda-extra" },
-            { id: 50, name: "Grupo Oficial Alunos", descodificado: "https://www.descodificado.com.br/Grupo-Oficial-Alunos/", github: "https://github.com/Adriele-Almeida/Grupo-Oficial-Alunos" }
+            { id: 50, name: "Grupo Oficial Alunos", descodificado: "https://www.descodificado.com.br/Grupo-Oficial-Alunos/", github: "https://github.com/Adriele-Almeida/Grupo-Oficial-Alunos" },
+            { id: 51, name: "Fluxo", descodificado: "https://www.descodificado.com.br/fluxo/", github: "https://github.com/Adriele-Almeida/fluxo" },
+            { id: 52, name: "Sistema", descodificado: "https://www.descodificado.com.br/sistema/", github: "https://github.com/Adriele-Almeida/sistema" },
+            { id: 53, name: "Iron Briefing", descodificado: "https://www.descodificado.com.br/iron-briefing/", github: "https://github.com/Adriele-Almeida/iron-briefing" },
+            { id: 54, name: "Estudo", descodificado: "https://www.descodificado.com.br/estudo/", github: "https://github.com/Adriele-Almeida/estudo" },
+            { id: 55, name: "JM Canva", descodificado: "https://www.descodificado.com.br/JM-canva/", github: "https://github.com/Adriele-Almeida/JM-canva" },
+            { id: 56, name: "Ebook 1", descodificado: "https://www.descodificado.com.br/ebook-1/", github: "https://github.com/Adriele-Almeida/ebook-1" },
+            { id: 57, name: "Ebook 2", descodificado: "https://www.descodificado.com.br/ebook-2/", github: "https://github.com/Adriele-Almeida/ebook-2" },
+            { id: 58, name: "Ebook 3", descodificado: "https://www.descodificado.com.br/ebook-3/", github: "https://github.com/Adriele-Almeida/ebook-3" },
+            { id: 59, name: "Fluxo Conteúdo", descodificado: "https://www.descodificado.com.br/fluxo-conteudo/", github: "https://github.com/Adriele-Almeida/fluxo-conteudo" },
+            { id: 60, name: "Diagramador", descodificado: "https://www.descodificado.com.br/diagramador/", github: "https://github.com/Adriele-Almeida/diagramador" },
+            { id: 61, name: "Lima", descodificado: "https://www.descodificado.com.br/lima/", github: "https://github.com/Adriele-Almeida/lima" }
         ];
 
         // Estado do Aplicativo
