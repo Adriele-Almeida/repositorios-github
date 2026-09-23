@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hub de Projetos Descodificados - Adriele Almeida</title>
+    <title>Painel GitHub • Repositórios</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Fontes do Google -->
@@ -70,27 +70,23 @@
     </div>
 
     <!-- Header Principal -->
-    <header class="border-b border-gray-800/80 bg-gray-950/60 backdrop-blur-md sticky top-0 z-40">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <div class="h-11 w-11 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-500 flex items-center justify-center font-bold text-white text-lg shadow-lg shadow-brand-500/20">
-                    AA
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-white via-gray-200 to-brand-400 bg-clip-text text-transparent">
-                        Adriele Almeida
-                    </h1>
-                    <p class="text-xs text-gray-400 font-medium flex items-center gap-1.5">
-                        <span class="inline-block w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                        Hub de Projetos Ativos
-                    </p>
-                </div>
+    <header class="border-b border-gray-800/80 bg-gray-950/70 backdrop-blur-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[104px] py-5 flex items-center justify-between gap-5">
+            <div class="min-w-0">
+                <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-white">
+                    Painel GitHub <span class="text-brand-400">• Repositórios</span>
+                </h1>
+                <p class="text-sm text-gray-400 mt-1">Adriele Almeida • Estrategista Digital</p>
             </div>
-            
-            <div class="flex items-center gap-3">
-                <a href="https://github.com/Adriele-Almeida" target="_blank" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white bg-gray-900/80 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-200 flex items-center gap-2">
-                    <i class="fa-brands fa-github text-base"></i>
-                    <span class="hidden sm:inline">Meu GitHub</span>
+
+            <div class="flex items-center gap-3 shrink-0">
+                <div class="text-right">
+                    <span class="text-2xl sm:text-3xl font-extrabold text-white block leading-none" id="stat-total-projects">73</span>
+                    <span class="text-[10px] sm:text-xs font-semibold text-gray-500 uppercase tracking-wider">Projetos</span>
+                </div>
+                <a href="https://github.com/Adriele-Almeida" target="_blank" title="Acessar GitHub" class="h-11 px-3 sm:px-4 inline-flex items-center justify-center gap-2 text-sm font-semibold text-gray-300 hover:text-white bg-gray-900/80 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-200">
+                    <i class="fa-brands fa-github text-lg"></i>
+                    <span class="hidden sm:inline">Acessar</span>
                 </a>
             </div>
         </div>
@@ -99,34 +95,6 @@
     <!-- Conteúdo Principal -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        <!-- Banner de Boas-vindas & Painel de Métricas -->
-        <div class="bg-gradient-to-r from-gray-950 to-gray-900/50 border border-gray-800/80 rounded-2xl p-6 sm:p-8 mb-8 relative overflow-hidden">
-            <div class="absolute -right-20 -top-20 w-80 h-80 bg-brand-600/10 rounded-full blur-3xl pointer-events-none"></div>
-            <div class="absolute -left-20 -bottom-20 w-80 h-80 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
-            
-            <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div>
-                    <span class="px-3 py-1 text-xs font-semibold bg-brand-500/10 text-brand-400 rounded-full border border-brand-500/20">Olá, Adriele! 👋</span>
-                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white mt-3">Sua Central de Acesso Rápido</h2>
-                    <p class="text-gray-400 mt-2 max-w-2xl text-sm sm:text-base leading-relaxed">
-                        Gerencie e acesse instantaneamente os repositórios oficiais e as páginas ao vivo dos seus 61 projetos desenvolvidos no ecossistema Descodificado.
-                    </p>
-                </div>
-                
-                <!-- Cards de Estatísticas -->
-                <div class="grid grid-cols-2 gap-4 sm:min-w-[280px]">
-                    <div class="bg-gray-900/60 border border-gray-800 p-4 rounded-xl text-center">
-                        <span class="text-3xl font-bold text-white block" id="stat-total-projects">61</span>
-                        <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Projetos</span>
-                    </div>
-                    <div class="bg-gray-900/60 border border-gray-800 p-4 rounded-xl text-center">
-                        <span class="text-3xl font-bold text-brand-400 block" id="stat-github">61</span>
-                        <span class="text-xs font-medium text-gray-400 uppercase tracking-wider">Código GitHub</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Barra de Ações & Filtros -->
         <div class="bg-gray-950/40 border border-gray-800/60 p-4 rounded-2xl mb-6 flex flex-col lg:flex-row gap-4 items-center justify-between">
             
@@ -158,21 +126,13 @@
                     </button>
                 </div>
 
-                <!-- Ordenação -->
-                <select id="sort-select" class="bg-gray-900 border border-gray-800 text-xs font-semibold rounded-xl px-3 py-2.5 text-gray-300 outline-none focus:border-brand-500 cursor-pointer">
-                    <option value="id-asc">Número (Crescente)</option>
-                    <option value="id-desc">Número (Decrescente)</option>
-                    <option value="name-asc">Nome (A - Z)</option>
-                    <option value="name-desc">Nome (Z - A)</option>
-                </select>
-
                 <!-- Alternador de Grade/Lista -->
                 <div class="inline-flex rounded-xl bg-gray-900 p-1 border border-gray-800/80">
-                    <button id="view-grid" class="p-2 rounded-lg bg-gray-800 text-brand-400 transition" title="Visualização em Grade">
-                        <i class="fa-solid fa-grid-2 text-sm fa-fw flex items-center justify-center">G</i>
+                    <button id="view-grid" class="p-2 rounded-lg bg-gray-800 text-brand-400 transition" title="Visualização em Grade" aria-label="Visualização em Grade">
+                        <i class="fa-solid fa-table-cells-large text-sm fa-fw"></i>
                     </button>
-                    <button id="view-list" class="p-2 rounded-lg text-gray-400 hover:text-white transition" title="Visualização em Lista">
-                        <i class="fa-solid fa-list text-sm fa-fw flex items-center justify-center">L</i>
+                    <button id="view-list" class="p-2 rounded-lg text-gray-400 hover:text-white transition" title="Visualização em Lista" aria-label="Visualização em Lista">
+                        <i class="fa-solid fa-list text-sm fa-fw"></i>
                     </button>
                 </div>
             </div>
@@ -194,95 +154,89 @@
 
     </main>
 
-    <!-- Rodapé -->
-    <footer class="border-t border-gray-900 bg-gray-950/80 py-8 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-            <p class="text-sm text-gray-500">
-                &copy; 2026 Hub Adriele Almeida. Desenvolvido com foco em performance e elegância.
-            </p>
-            <div class="flex items-center gap-6">
-                <a href="https://www.descodificado.com.br" target="_blank" class="text-sm text-gray-400 hover:text-brand-400 transition">
-                    Descodificado.com.br
-                </a>
-                <a href="https://github.com/Adriele-Almeida" target="_blank" class="text-sm text-gray-400 hover:text-brand-400 transition">
-                    GitHub Oficial
-                </a>
-            </div>
-        </div>
-    </footer>
-
     <!-- Script de Dados & Lógicas -->
     <script>
-        // Array com todos os 61 projetos catalogados
+        // Repositórios catalogados no Hub
         const rawProjectsData = [
-            { id: 1, name: "Treinamento Ao Vivo", descodificado: "https://www.descodificado.com.br/Treinamento-Ao-Vivo/", github: "https://github.com/Adriele-Almeida/Treinamento-Ao-Vivo" },
-            { id: 2, name: "Novo", descodificado: "https://www.descodificado.com.br/novo/", github: "https://github.com/Adriele-Almeida/novo" },
-            { id: 3, name: "Projeto ChatGPT", descodificado: "https://www.descodificado.com.br/projeto-chatGPT/", github: "https://github.com/Adriele-Almeida/projeto-chatGPT" },
-            { id: 4, name: "ManyChat App Site Landing Page", descodificado: "https://www.descodificado.com.br/ManyChat---App-Site---Landing-Page-/", github: "https://github.com/Adriele-Almeida/ManyChat---App-Site---Landing-Page-" },
-            { id: 5, name: "Guia GitHub 2", descodificado: "https://www.descodificado.com.br/guia-github2/", github: "https://github.com/Adriele-Almeida/guia-github2" },
-            { id: 6, name: "Código Alerta", descodificado: "https://www.descodificado.com.br/codigo-alerta/", github: "https://github.com/Adriele-Almeida/codigo-alerta" },
-            { id: 7, name: "Conteúdo", descodificado: "https://www.descodificado.com.br/conteudo/", github: "https://github.com/Adriele-Almeida/conteudo" },
-            { id: 8, name: "Estrategista Digital", descodificado: "https://www.descodificado.com.br/estrategista-digital/", github: "https://github.com/Adriele-Almeida/estrategista-digital" },
-            { id: 9, name: "Método de Gravação de Curso App", descodificado: "https://www.descodificado.com.br/Metodo-de-Grava-o-de-Curso-APP/", github: "https://github.com/Adriele-Almeida/Metodo-de-Grava-o-de-Curso-APP" },
-            { id: 10, name: "Claude Descodificado", descodificado: "https://www.descodificado.com.br/Claude-Descodificado/", github: "https://github.com/Adriele-Almeida/Claude-Descodificado" },
-            { id: 11, name: "Rascunho 02", descodificado: "https://www.descodificado.com.br/rascunho-02/", github: "https://github.com/Adriele-Almeida/rascunho-02" },
-            { id: 12, name: "Produtividade", descodificado: "https://www.descodificado.com.br/produtividade/", github: "https://github.com/Adriele-Almeida/produtividade" },
-            { id: 13, name: "Gerador Laudo", descodificado: "https://www.descodificado.com.br/gerador-laudo/", github: "https://github.com/Adriele-Almeida/gerador-laudo" },
-            { id: 14, name: "Home — O Código do Novo Digital", descodificado: "https://www.descodificado.com.br/Home---O-C-digo-do-Novo-Digital/", github: "https://github.com/Adriele-Almeida/Home---O-C-digo-do-Novo-Digital" },
-            { id: 15, name: "Teste Netlify", descodificado: "https://www.descodificado.com.br/teste-netlify/", github: "https://github.com/Adriele-Almeida/teste-netlify" },
-            { id: 16, name: "Adriele Almeida GitHub IO", descodificado: "https://www.descodificado.com.br/adriele-almeida.github.io/", github: "https://github.com/Adriele-Almeida/adriele-almeida.github.io" },
-            { id: 17, name: "Conteúdo 30 Dias", descodificado: "https://www.descodificado.com.br/conteudo-30-dias/", github: "https://github.com/Adriele-Almeida/conteudo-30-dias" },
-            { id: 18, name: "Teste de Campanha", descodificado: "https://www.descodificado.com.br/02-Teste-de-Campanha/", github: "https://github.com/Adriele-Almeida/02-Teste-de-Campanha" },
-            { id: 19, name: "Inteligência Artificial", descodificado: "https://www.descodificado.com.br/Intelig-ncia-Artificial/", github: "https://github.com/Adriele-Almeida/Intelig-ncia-Artificial" },
-            { id: 20, name: "Instagram Imobiliário", descodificado: "https://www.descodificado.com.br/Instagram-Imobiliario/", github: "https://github.com/Adriele-Almeida/Instagram-Imobiliario" },
-            { id: 21, name: "2", descodificado: "https://www.descodificado.com.br/2/", github: "https://github.com/Adriele-Almeida/2" },
-            { id: 22, name: "Rascunho 03", descodificado: "https://www.descodificado.com.br/rascunho-03/", github: "https://github.com/Adriele-Almeida/rascunho-03" },
-            { id: 23, name: "Hub Projetos", descodificado: "https://www.descodificado.com.br/hub-projetos/", github: "https://github.com/Adriele-Almeida/hub-projetos" },
-            { id: 24, name: "Ordem Progresso", descodificado: "https://www.descodificado.com.br/ordem-progresso/", github: "https://github.com/Adriele-Almeida/ordem-progresso" },
-            { id: 25, name: "App Loja ClimaBet", descodificado: "https://www.descodificado.com.br/app-lojaclimabet/", github: "https://github.com/Adriele-Almeida/app-lojaclimabet" },
-            { id: 26, name: "Novo Código", descodificado: "https://www.descodificado.com.br/Novo-Codigo/", github: "https://github.com/Adriele-Almeida/Novo-Codigo" },
-            { id: 27, name: "Receita de Massa", descodificado: "https://www.descodificado.com.br/Receita-de-Massa/", github: "https://github.com/Adriele-Almeida/Receita-de-Massa" },
-            { id: 28, name: "Teste Teste", descodificado: "https://www.descodificado.com.br/teste_teste/", github: "https://github.com/Adriele-Almeida/teste_teste" },
-            { id: 29, name: "Arquiteto de Iscas", descodificado: "https://www.descodificado.com.br/Arquiteto-de-iscas/", github: "https://github.com/Adriele-Almeida/Arquiteto-de-iscas" },
-            { id: 30, name: "Guia GitHub Passo a Passo", descodificado: "https://www.descodificado.com.br/Guia-Github-Passo-a-Passo/", github: "https://github.com/Adriele-Almeida/Guia-Github-Passo-a-Passo" },
-            { id: 31, name: "Planilha Educação", descodificado: "https://www.descodificado.com.br/planilha-educacao/", github: "https://github.com/Adriele-Almeida/planilha-educacao" },
-            { id: 32, name: "Guia GitHub", descodificado: "https://www.descodificado.com.br/Guia-Github/", github: "https://github.com/Adriele-Almeida/Guia-Github" },
-            { id: 33, name: "Dossiê", descodificado: "https://www.descodificado.com.br/dossie/", github: "https://github.com/Adriele-Almeida/dossie" },
-            { id: 34, name: "Ferramentas", descodificado: "https://www.descodificado.com.br/ferramentas/", github: "https://github.com/Adriele-Almeida/ferramentas" },
-            { id: 35, name: "4", descodificado: "https://www.descodificado.com.br/4/", github: "https://github.com/Adriele-Almeida/4" },
-            { id: 36, name: "3", descodificado: "https://www.descodificado.com.br/3/", github: "https://github.com/Adriele-Almeida/3" },
-            { id: 37, name: "1", descodificado: "https://www.descodificado.com.br/1/", github: "https://github.com/Adriele-Almeida/1" },
-            { id: 38, name: "Template Automático", descodificado: "https://www.descodificado.com.br/template-automatico/", github: "https://github.com/Adriele-Almeida/template-automatico" },
-            { id: 39, name: "Guia Prático Instagram 2026", descodificado: "https://www.descodificado.com.br/rascunho-01/", github: "https://github.com/Adriele-Almeida/rascunho-01" },
-            { id: 40, name: "Story Template", descodificado: "https://www.descodificado.com.br/story-template/", github: "https://github.com/Adriele-Almeida/story-template" },
-            { id: 41, name: "Produtividade 2", descodificado: "https://www.descodificado.com.br/produtividade2/", github: "https://github.com/Adriele-Almeida/produtividade2" },
-            { id: 42, name: "GPTs", descodificado: "https://www.descodificado.com.br/gpts/", github: "https://github.com/Adriele-Almeida/gpts" },
-            { id: 43, name: "Hub GPTs", descodificado: "https://www.descodificado.com.br/Hub-GPTs/", github: "https://github.com/Adriele-Almeida/Hub-GPTs" },
-            { id: 44, name: "Prompt", descodificado: "https://www.descodificado.com.br/prompt/", github: "https://github.com/Adriele-Almeida/prompt" },
-            { id: 45, name: "Instagram Zero", descodificado: "https://www.descodificado.com.br/instagram-zero/", github: "https://github.com/Adriele-Almeida/instagram-zero" },
-            { id: 46, name: "Conteúdo Novo", descodificado: "https://www.descodificado.com.br/conteudo-novo/", github: "https://github.com/Adriele-Almeida/conteudo-novo" },
-            { id: 47, name: "30 Dias Positivo", descodificado: "https://www.descodificado.com.br/30-dias-positivo/", github: "https://github.com/Adriele-Almeida/30-dias-positivo" },
-            { id: 48, name: "Card Estúdio", descodificado: "https://www.descodificado.com.br/card-estudio/", github: "https://github.com/Adriele-Almeida/card-estudio" },
-            { id: 49, name: "Público Renda Extra", descodificado: "https://www.descodificado.com.br/Publico-Renda-extra/", github: "https://github.com/Adriele-Almeida/Publico-Renda-extra" },
-            { id: 50, name: "Grupo Oficial Alunos", descodificado: "https://www.descodificado.com.br/Grupo-Oficial-Alunos/", github: "https://github.com/Adriele-Almeida/Grupo-Oficial-Alunos" },
-            { id: 51, name: "Fluxo", descodificado: "https://www.descodificado.com.br/fluxo/", github: "https://github.com/Adriele-Almeida/fluxo" },
-            { id: 52, name: "Sistema", descodificado: "https://www.descodificado.com.br/sistema/", github: "https://github.com/Adriele-Almeida/sistema" },
-            { id: 53, name: "Iron Briefing", descodificado: "https://www.descodificado.com.br/iron-briefing/", github: "https://github.com/Adriele-Almeida/iron-briefing" },
-            { id: 54, name: "Estudo", descodificado: "https://www.descodificado.com.br/estudo/", github: "https://github.com/Adriele-Almeida/estudo" },
-            { id: 55, name: "JM Canva", descodificado: "https://www.descodificado.com.br/JM-canva/", github: "https://github.com/Adriele-Almeida/JM-canva" },
-            { id: 56, name: "Ebook 1", descodificado: "https://www.descodificado.com.br/ebook-1/", github: "https://github.com/Adriele-Almeida/ebook-1" },
-            { id: 57, name: "Ebook 2", descodificado: "https://www.descodificado.com.br/ebook-2/", github: "https://github.com/Adriele-Almeida/ebook-2" },
-            { id: 58, name: "Ebook 3", descodificado: "https://www.descodificado.com.br/ebook-3/", github: "https://github.com/Adriele-Almeida/ebook-3" },
-            { id: 59, name: "Fluxo Conteúdo", descodificado: "https://www.descodificado.com.br/fluxo-conteudo/", github: "https://github.com/Adriele-Almeida/fluxo-conteudo" },
-            { id: 60, name: "Diagramador", descodificado: "https://www.descodificado.com.br/diagramador/", github: "https://github.com/Adriele-Almeida/diagramador" },
-            { id: 61, name: "Lima", descodificado: "https://www.descodificado.com.br/lima/", github: "https://github.com/Adriele-Almeida/lima" }
+            { id: 1, name: "Treinamento-Ao-Vivo", repo: "Treinamento-Ao-Vivo", descodificado: "https://adriele-almeida.github.io/Treinamento-Ao-Vivo/", github: "https://github.com/Adriele-Almeida/Treinamento-Ao-Vivo" },
+            { id: 2, name: "novo", repo: "novo", descodificado: "https://adriele-almeida.github.io/novo/", github: "https://github.com/Adriele-Almeida/novo" },
+            { id: 3, name: "projeto-chatGPT", repo: "projeto-chatGPT", descodificado: "https://adriele-almeida.github.io/projeto-chatGPT/", github: "https://github.com/Adriele-Almeida/projeto-chatGPT" },
+            { id: 4, name: "ManyChat---App-Site---Landing-Page-", repo: "ManyChat---App-Site---Landing-Page-", descodificado: "https://adriele-almeida.github.io/ManyChat---App-Site---Landing-Page-/", github: "https://github.com/Adriele-Almeida/ManyChat---App-Site---Landing-Page-" },
+            { id: 5, name: "guia-github2", repo: "guia-github2", descodificado: "https://adriele-almeida.github.io/guia-github2/", github: "https://github.com/Adriele-Almeida/guia-github2" },
+            { id: 6, name: "codigo-alerta", repo: "codigo-alerta", descodificado: "https://adriele-almeida.github.io/codigo-alerta/", github: "https://github.com/Adriele-Almeida/codigo-alerta" },
+            { id: 7, name: "conteudo", repo: "conteudo", descodificado: "https://adriele-almeida.github.io/conteudo/", github: "https://github.com/Adriele-Almeida/conteudo" },
+            { id: 8, name: "estrategista-digital", repo: "estrategista-digital", descodificado: "https://adriele-almeida.github.io/estrategista-digital/", github: "https://github.com/Adriele-Almeida/estrategista-digital" },
+            { id: 9, name: "Metodo-de-Grava-o-de-Curso-APP", repo: "Metodo-de-Grava-o-de-Curso-APP", descodificado: "https://adriele-almeida.github.io/Metodo-de-Grava-o-de-Curso-APP/", github: "https://github.com/Adriele-Almeida/Metodo-de-Grava-o-de-Curso-APP" },
+            { id: 10, name: "Claude-Descodificado", repo: "Claude-Descodificado", descodificado: "https://adriele-almeida.github.io/Claude-Descodificado/", github: "https://github.com/Adriele-Almeida/Claude-Descodificado" },
+            { id: 11, name: "rascunho-02", repo: "rascunho-02", descodificado: "https://adriele-almeida.github.io/rascunho-02/", github: "https://github.com/Adriele-Almeida/rascunho-02" },
+            { id: 12, name: "produtividade", repo: "produtividade", descodificado: "https://adriele-almeida.github.io/produtividade/", github: "https://github.com/Adriele-Almeida/produtividade" },
+            { id: 13, name: "gerador-laudo", repo: "gerador-laudo", descodificado: "https://adriele-almeida.github.io/gerador-laudo/", github: "https://github.com/Adriele-Almeida/gerador-laudo" },
+            { id: 14, name: "Home---O-C-digo-do-Novo-Digital", repo: "Home---O-C-digo-do-Novo-Digital", descodificado: "https://adriele-almeida.github.io/Home---O-C-digo-do-Novo-Digital/", github: "https://github.com/Adriele-Almeida/Home---O-C-digo-do-Novo-Digital" },
+            { id: 15, name: "teste-netlify", repo: "teste-netlify", descodificado: "https://adriele-almeida.github.io/teste-netlify/", github: "https://github.com/Adriele-Almeida/teste-netlify" },
+            { id: 16, name: "adriele-almeida.github.io", repo: "adriele-almeida.github.io", descodificado: "https://adriele-almeida.github.io/", github: "https://github.com/Adriele-Almeida/adriele-almeida.github.io" },
+            { id: 17, name: "conteudo-30-dias", repo: "conteudo-30-dias", descodificado: "https://adriele-almeida.github.io/conteudo-30-dias/", github: "https://github.com/Adriele-Almeida/conteudo-30-dias" },
+            { id: 18, name: "02-Teste-de-Campanha", repo: "02-Teste-de-Campanha", descodificado: "https://adriele-almeida.github.io/02-Teste-de-Campanha/", github: "https://github.com/Adriele-Almeida/02-Teste-de-Campanha" },
+            { id: 19, name: "Intelig-ncia-Artificial", repo: "Intelig-ncia-Artificial", descodificado: "https://adriele-almeida.github.io/Intelig-ncia-Artificial/", github: "https://github.com/Adriele-Almeida/Intelig-ncia-Artificial" },
+            { id: 20, name: "Instagram-Imobiliario", repo: "Instagram-Imobiliario", descodificado: "https://adriele-almeida.github.io/Instagram-Imobiliario/", github: "https://github.com/Adriele-Almeida/Instagram-Imobiliario" },
+            { id: 21, name: "2", repo: "2", descodificado: "https://adriele-almeida.github.io/2/", github: "https://github.com/Adriele-Almeida/2" },
+            { id: 22, name: "rascunho-03", repo: "rascunho-03", descodificado: "https://adriele-almeida.github.io/rascunho-03/", github: "https://github.com/Adriele-Almeida/rascunho-03" },
+            { id: 23, name: "hub-projetos", repo: "hub-projetos", descodificado: "https://adriele-almeida.github.io/hub-projetos/", github: "https://github.com/Adriele-Almeida/hub-projetos" },
+            { id: 24, name: "ordem-progresso", repo: "ordem-progresso", descodificado: "https://adriele-almeida.github.io/ordem-progresso/", github: "https://github.com/Adriele-Almeida/ordem-progresso" },
+            { id: 25, name: "app-lojaclimabet", repo: "app-lojaclimabet", descodificado: "https://adriele-almeida.github.io/app-lojaclimabet/", github: "https://github.com/Adriele-Almeida/app-lojaclimabet" },
+            { id: 26, name: "Novo-Codigo", repo: "Novo-Codigo", descodificado: "https://adriele-almeida.github.io/Novo-Codigo/", github: "https://github.com/Adriele-Almeida/Novo-Codigo" },
+            { id: 27, name: "Receita-de-Massa-", repo: "Receita-de-Massa-", descodificado: "https://adriele-almeida.github.io/Receita-de-Massa-/", github: "https://github.com/Adriele-Almeida/Receita-de-Massa-" },
+            { id: 29, name: "Arquiteto-de-iscas", repo: "Arquiteto-de-iscas", descodificado: "https://adriele-almeida.github.io/Arquiteto-de-iscas/", github: "https://github.com/Adriele-Almeida/Arquiteto-de-iscas" },
+            { id: 30, name: "Guia-Github-Passo-a-Passo", repo: "Guia-Github-Passo-a-Passo", descodificado: "https://adriele-almeida.github.io/Guia-Github-Passo-a-Passo/", github: "https://github.com/Adriele-Almeida/Guia-Github-Passo-a-Passo" },
+            { id: 31, name: "planilha-educacao", repo: "planilha-educacao", descodificado: "https://adriele-almeida.github.io/planilha-educacao/", github: "https://github.com/Adriele-Almeida/planilha-educacao" },
+            { id: 32, name: "Guia-Github", repo: "Guia-Github", descodificado: "https://adriele-almeida.github.io/Guia-Github/", github: "https://github.com/Adriele-Almeida/Guia-Github" },
+            { id: 33, name: "dossie", repo: "dossie", descodificado: "https://adriele-almeida.github.io/dossie/", github: "https://github.com/Adriele-Almeida/dossie" },
+            { id: 34, name: "ferramentas", repo: "ferramentas", descodificado: "https://adriele-almeida.github.io/ferramentas/", github: "https://github.com/Adriele-Almeida/ferramentas" },
+            { id: 35, name: "4", repo: "4", descodificado: "https://adriele-almeida.github.io/4/", github: "https://github.com/Adriele-Almeida/4" },
+            { id: 36, name: "3", repo: "3", descodificado: "https://adriele-almeida.github.io/3/", github: "https://github.com/Adriele-Almeida/3" },
+            { id: 37, name: "1", repo: "1", descodificado: "https://adriele-almeida.github.io/1/", github: "https://github.com/Adriele-Almeida/1" },
+            { id: 38, name: "template-automatico", repo: "template-automatico", descodificado: "https://adriele-almeida.github.io/template-automatico/", github: "https://github.com/Adriele-Almeida/template-automatico" },
+            { id: 39, name: "rascunho-01", repo: "rascunho-01", descodificado: "https://adriele-almeida.github.io/rascunho-01/", github: "https://github.com/Adriele-Almeida/rascunho-01" },
+            { id: 40, name: "story-template", repo: "story-template", descodificado: "https://adriele-almeida.github.io/story-template/", github: "https://github.com/Adriele-Almeida/story-template" },
+            { id: 41, name: "produtividade2", repo: "produtividade2", descodificado: "https://adriele-almeida.github.io/produtividade2/", github: "https://github.com/Adriele-Almeida/produtividade2" },
+            { id: 42, name: "gpts", repo: "gpts", descodificado: "https://adriele-almeida.github.io/gpts/", github: "https://github.com/Adriele-Almeida/gpts" },
+            { id: 43, name: "Hub-GPTs", repo: "Hub-GPTs", descodificado: "https://adriele-almeida.github.io/Hub-GPTs/", github: "https://github.com/Adriele-Almeida/Hub-GPTs" },
+            { id: 44, name: "prompt", repo: "prompt", descodificado: "https://adriele-almeida.github.io/prompt/", github: "https://github.com/Adriele-Almeida/prompt" },
+            { id: 45, name: "instagram-zero", repo: "instagram-zero", descodificado: "https://adriele-almeida.github.io/instagram-zero/", github: "https://github.com/Adriele-Almeida/instagram-zero" },
+            { id: 46, name: "conteudo-novo", repo: "conteudo-novo", descodificado: "https://adriele-almeida.github.io/conteudo-novo/", github: "https://github.com/Adriele-Almeida/conteudo-novo" },
+            { id: 47, name: "30-dias-positivo", repo: "30-dias-positivo", descodificado: "https://adriele-almeida.github.io/30-dias-positivo/", github: "https://github.com/Adriele-Almeida/30-dias-positivo" },
+            { id: 48, name: "card-estudio", repo: "card-estudio", descodificado: "https://adriele-almeida.github.io/card-estudio/", github: "https://github.com/Adriele-Almeida/card-estudio" },
+            { id: 49, name: "Publico-Renda-extra", repo: "Publico-Renda-extra", descodificado: "https://adriele-almeida.github.io/Publico-Renda-extra/", github: "https://github.com/Adriele-Almeida/Publico-Renda-extra" },
+            { id: 50, name: "Grupo-Oficial-Alunos", repo: "Grupo-Oficial-Alunos", descodificado: "https://adriele-almeida.github.io/Grupo-Oficial-Alunos/", github: "https://github.com/Adriele-Almeida/Grupo-Oficial-Alunos" },
+            { id: 51, name: "fluxo", repo: "fluxo", descodificado: "https://adriele-almeida.github.io/fluxo/", github: "https://github.com/Adriele-Almeida/fluxo" },
+            { id: 52, name: "sistema", repo: "sistema", descodificado: "https://adriele-almeida.github.io/sistema/", github: "https://github.com/Adriele-Almeida/sistema" },
+            { id: 53, name: "iron-briefing", repo: "iron-briefing", descodificado: "https://adriele-almeida.github.io/iron-briefing/", github: "https://github.com/Adriele-Almeida/iron-briefing" },
+            { id: 54, name: "estudo", repo: "estudo", descodificado: "https://adriele-almeida.github.io/estudo/", github: "https://github.com/Adriele-Almeida/estudo" },
+            { id: 55, name: "JM-canva", repo: "JM-canva", descodificado: "https://adriele-almeida.github.io/JM-canva/", github: "https://github.com/Adriele-Almeida/JM-canva" },
+            { id: 56, name: "ebook-1", repo: "ebook-1", descodificado: "https://adriele-almeida.github.io/ebook-1/", github: "https://github.com/Adriele-Almeida/ebook-1" },
+            { id: 57, name: "ebook-2", repo: "ebook-2", descodificado: "https://adriele-almeida.github.io/ebook-2/", github: "https://github.com/Adriele-Almeida/ebook-2" },
+            { id: 58, name: "ebook-3", repo: "ebook-3", descodificado: "https://adriele-almeida.github.io/ebook-3/", github: "https://github.com/Adriele-Almeida/ebook-3" },
+            { id: 59, name: "fluxo-conteudo", repo: "fluxo-conteudo", descodificado: "https://adriele-almeida.github.io/fluxo-conteudo/", github: "https://github.com/Adriele-Almeida/fluxo-conteudo" },
+            { id: 60, name: "diagramador", repo: "diagramador", descodificado: "https://adriele-almeida.github.io/diagramador/", github: "https://github.com/Adriele-Almeida/diagramador" },
+            { id: 61, name: "lima", repo: "lima", descodificado: "https://adriele-almeida.github.io/lima/", github: "https://github.com/Adriele-Almeida/lima" },
+            { id: 62, name: "teste", repo: "teste", descodificado: "https://adriele-almeida.github.io/teste/", github: "https://github.com/Adriele-Almeida/teste" },
+            { id: 63, name: "appimagemfacil", repo: "appimagemfacil", descodificado: "https://adriele-almeida.github.io/appimagemfacil/", github: "https://github.com/Adriele-Almeida/appimagemfacil" },
+            { id: 64, name: "Imers-o---O-Maestro", repo: "Imers-o---O-Maestro", descodificado: "https://adriele-almeida.github.io/Imers-o---O-Maestro/", github: "https://github.com/Adriele-Almeida/Imers-o---O-Maestro" },
+            { id: 65, name: "quebra-legenda", repo: "quebra-legenda", descodificado: "https://adriele-almeida.github.io/quebra-legenda/", github: "https://github.com/Adriele-Almeida/quebra-legenda" },
+            { id: 66, name: "repositorios-github", repo: "repositorios-github", descodificado: "https://adriele-almeida.github.io/repositorios-github/", github: "https://github.com/Adriele-Almeida/repositorios-github" },
+            { id: 67, name: "meu-ebook", repo: "meu-ebook", descodificado: "https://adriele-almeida.github.io/meu-ebook/", github: "https://github.com/Adriele-Almeida/meu-ebook" },
+            { id: 68, name: "dashboard-postagens", repo: "dashboard-postagens", descodificado: "https://adriele-almeida.github.io/dashboard-postagens/", github: "https://github.com/Adriele-Almeida/dashboard-postagens" },
+            { id: 69, name: "execucao", repo: "execucao", descodificado: "https://adriele-almeida.github.io/execucao/", github: "https://github.com/Adriele-Almeida/execucao" },
+            { id: 70, name: "metricas-JM-2026", repo: "metricas-JM-2026", descodificado: "https://adriele-almeida.github.io/metricas-JM-2026/", github: "https://github.com/Adriele-Almeida/metricas-JM-2026" },
+            { id: 71, name: "meu-hub-de-links", repo: "meu-hub-de-links", descodificado: "https://adriele-almeida.github.io/meu-hub-de-links/", github: "https://github.com/Adriele-Almeida/meu-hub-de-links" },
+            { id: 72, name: "meu-hub-de-links-01", repo: "meu-hub-de-links-01", descodificado: "https://adriele-almeida.github.io/meu-hub-de-links-01/", github: "https://github.com/Adriele-Almeida/meu-hub-de-links-01" },
+            { id: 73, name: "meu-hub-de-links-02", repo: "meu-hub-de-links-02", descodificado: "https://adriele-almeida.github.io/meu-hub-de-links-02/", github: "https://github.com/Adriele-Almeida/meu-hub-de-links-02" },
+            { id: 74, name: "meu-hub-de-links-v3", repo: "meu-hub-de-links-v3", descodificado: "https://adriele-almeida.github.io/meu-hub-de-links-v3/", github: "https://github.com/Adriele-Almeida/meu-hub-de-links-v3" }
         ];
 
         // Estado do Aplicativo
         let state = {
             searchQuery: "",
             currentFilter: "all", // "all", "favorites"
-            sortBy: "id-asc",
             viewMode: "grid", // "grid", "list"
             favorites: JSON.parse(localStorage.getItem("descodificado_favs") || "[]")
         };
@@ -291,7 +245,6 @@
         const projectsGrid = document.getElementById("projects-grid");
         const searchInput = document.getElementById("search-input");
         const clearSearchBtn = document.getElementById("clear-search");
-        const sortSelect = document.getElementById("sort-select");
         const viewGridBtn = document.getElementById("view-grid");
         const viewListBtn = document.getElementById("view-list");
         const filterAllBtn = document.getElementById("filter-all");
@@ -340,8 +293,21 @@
         function render() {
             // 1. Filtragem por busca e categorias
             let filtered = rawProjectsData.filter(proj => {
-                const matchesSearch = proj.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || 
-                                      proj.descodificado.toLowerCase().includes(state.searchQuery.toLowerCase());
+                const normalizeText = value => String(value || "")
+                    .normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .toLowerCase()
+                    .trim();
+
+                const query = normalizeText(state.searchQuery);
+                const searchable = normalizeText([
+                    proj.name,
+                    proj.repo,
+                    proj.descodificado,
+                    proj.github
+                ].join(" "));
+
+                const matchesSearch = searchable.includes(query);
                 
                 if (state.currentFilter === "favorites") {
                     return matchesSearch && state.favorites.includes(proj.id);
@@ -349,13 +315,25 @@
                 return matchesSearch;
             });
 
-            // 2. Ordenação
+            // 2. Ordem fixa: nomes em A-Z; repositórios iniciados por número ficam no final
+            const normalizeSort = value => String(value || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase();
+
             filtered.sort((a, b) => {
-                if (state.sortBy === "id-asc") return a.id - b.id;
-                if (state.sortBy === "id-desc") return b.id - a.id;
-                if (state.sortBy === "name-asc") return a.name.localeCompare(b.name);
-                if (state.sortBy === "name-desc") return b.name.localeCompare(a.name);
-                return 0;
+                const aStartsNumber = /^\d/.test(a.name.trim());
+                const bStartsNumber = /^\d/.test(b.name.trim());
+
+                if (aStartsNumber !== bStartsNumber) {
+                    return aStartsNumber ? 1 : -1;
+                }
+
+                return normalizeSort(a.name).localeCompare(
+                    normalizeSort(b.name),
+                    "pt-BR",
+                    { numeric: true, sensitivity: "base" }
+                );
             });
 
             // 3. Atualizar Layout (Grid vs Lista)
@@ -380,11 +358,7 @@
                     card.innerHTML = `
                         <div>
                             <!-- Topo do card -->
-                            <div class="flex items-start justify-between gap-2 mb-3">
-                                <span class="text-xs font-semibold text-gray-500 px-2 py-0.5 bg-gray-950 rounded-md border border-gray-800">
-                                    #${String(proj.id).padStart(2, '0')}
-                                </span>
-                                <button onclick="toggleFavorite(${proj.id})" class="text-gray-500 hover:text-amber-400 transition" title="Favoritar">
+                            <div class="flex items-start justify-between gap-2 mb-3">                                <button onclick="toggleFavorite(${proj.id})" class="text-gray-500 hover:text-amber-400 transition" title="Favoritar">
                                     <i class="${isFav ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-base"></i>
                                 </button>
                             </div>
@@ -432,11 +406,7 @@
                     listRow.className = "bg-gray-900/60 border border-gray-800/80 rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-brand-500/40 hover:bg-gray-900 transition duration-200";
                     
                     listRow.innerHTML = `
-                        <div class="flex items-center gap-4">
-                            <span class="text-xs font-semibold text-gray-500 px-2.5 py-1 bg-gray-950 rounded-md border border-gray-850 min-w-[40px] text-center">
-                                #${String(proj.id).padStart(2, '0')}
-                            </span>
-                            <button onclick="toggleFavorite(${proj.id})" class="text-gray-500 hover:text-amber-400 transition" title="Favoritar">
+                        <div class="flex items-center gap-4">                            <button onclick="toggleFavorite(${proj.id})" class="text-gray-500 hover:text-amber-400 transition" title="Favoritar">
                                 <i class="${isFav ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-base"></i>
                             </button>
                             <h3 class="text-sm font-bold text-gray-100">${proj.name}</h3>
@@ -487,11 +457,6 @@
             render();
         });
 
-        sortSelect.addEventListener("change", (e) => {
-            state.sortBy = e.target.value;
-            render();
-        });
-
         // Toggle Grid/List
         viewGridBtn.addEventListener("click", () => {
             state.viewMode = "grid";
@@ -525,6 +490,8 @@
 
         // Inicializar aplicação
         document.addEventListener("DOMContentLoaded", () => {
+            const totalProjects = document.getElementById("stat-total-projects");
+            if (totalProjects) totalProjects.textContent = rawProjectsData.length;
             render();
         });
     </script>
