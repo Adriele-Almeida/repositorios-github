@@ -4,15 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Painel GitHub • Repositórios</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Fontes do Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Font Awesome para ícones consistentes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.1"></script>
+
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -45,7 +43,6 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #0b0f19;
         }
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -63,13 +60,11 @@
 </head>
 <body class="text-gray-100 min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
 
-    <!-- Notificação Flutuante (Toast) -->
     <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-gray-900 border border-brand-500 text-white px-5 py-3 rounded-xl shadow-2xl flex items-center gap-3">
         <i class="fa-solid fa-circle-check text-emerald-400 text-lg"></i>
         <span id="toast-message" class="text-sm font-medium">Link copiado com sucesso!</span>
     </div>
 
-    <!-- Header Principal -->
     <header class="border-b border-gray-800/80 bg-gray-950/70 backdrop-blur-md sticky top-0 z-40">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[104px] py-5 flex items-center justify-between gap-5">
             <div class="min-w-0">
@@ -81,10 +76,10 @@
 
             <div class="flex items-stretch gap-2.5 shrink-0">
                 <div class="min-w-[82px] px-3.5 py-2.5 rounded-xl border border-gray-800 bg-gray-900/65 flex flex-col items-center justify-center">
-                    <span class="text-[28px] sm:text-3xl font-extrabold text-white block leading-none" id="stat-total-projects">73</span>
+                    <span class="text-[28px] sm:text-3xl font-extrabold text-white block leading-none" id="stat-total-projects">0</span>
                     <span class="mt-1 text-[10px] font-semibold text-gray-500 uppercase tracking-[0.14em]">Projetos</span>
                 </div>
-                <a href="https://github.com/Adriele-Almeida" target="_blank" title="Acessar GitHub" aria-label="Acessar GitHub" class="w-12 sm:w-auto sm:px-4 inline-flex items-center justify-center gap-2 text-sm font-semibold text-gray-300 hover:text-white bg-gray-900/80 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-200">
+                <a href="https://github.com/Adriele-Almeida" target="_blank" rel="noopener noreferrer" title="Acessar GitHub" aria-label="Acessar GitHub" class="w-12 sm:w-auto sm:px-4 inline-flex items-center justify-center gap-2 text-sm font-semibold text-gray-300 hover:text-white bg-gray-900/80 hover:bg-gray-800 border border-gray-800 rounded-xl transition duration-200">
                     <i class="fa-brands fa-github text-xl"></i>
                     <span class="hidden sm:inline">Acessar</span>
                 </a>
@@ -92,12 +87,8 @@
         </div>
     </header>
 
-    <!-- Conteúdo Principal -->
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
-        <!-- Busca e controles -->
         <div class="bg-gray-950/40 border border-gray-800/60 p-4 sm:p-5 rounded-2xl mb-6">
-            <!-- Busca em linha própria -->
             <div class="relative w-full">
                 <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <i class="fa-solid fa-magnifying-glass text-gray-500 text-base"></i>
@@ -113,7 +104,6 @@
                 </button>
             </div>
 
-            <!-- Controles em uma linha equilibrada -->
             <div class="mt-4 flex items-center justify-between gap-3">
                 <div class="flex-1 inline-flex rounded-xl bg-gray-900 p-1 border border-gray-800/80 min-w-0">
                     <button id="filter-all" class="flex-1 h-11 px-4 rounded-lg text-sm font-semibold bg-brand-600 text-white transition duration-200">
@@ -136,12 +126,8 @@
             </div>
         </div>
 
-        <!-- Área dos Resultados (Grade de Projetos) -->
-        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 transition-all duration-300">
-            <!-- Os cards serão gerados dinamicamente via JS -->
-        </div>
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 transition-all duration-300"></div>
 
-        <!-- Estado de Nenhum Resultado Encontrado -->
         <div id="no-results" class="hidden text-center py-20 bg-gray-950/20 rounded-2xl border border-dashed border-gray-800">
             <div class="h-16 w-16 bg-gray-900 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-800">
                 <i class="fa-solid fa-magnifying-glass text-gray-600 text-2xl"></i>
@@ -149,97 +135,22 @@
             <h3 class="text-lg font-bold text-gray-300">Nenhum projeto encontrado</h3>
             <p class="text-gray-500 mt-1 max-w-sm mx-auto text-sm">Verifique os termos digitados ou experimente limpar os filtros.</p>
         </div>
-
     </main>
 
-    <!-- Script de Dados & Lógicas -->
     <script>
-        // Repositórios catalogados no Hub
-        const rawProjectsData = [
-            { id: 1, name: "Treinamento Ao Vivo", repo: "Treinamento-Ao-Vivo", descodificado: "https://adriele-almeida.github.io/Treinamento-Ao-Vivo/", github: "https://github.com/Adriele-Almeida/Treinamento-Ao-Vivo" },
-            { id: 2, name: "Novo", repo: "novo", descodificado: "https://adriele-almeida.github.io/novo/", github: "https://github.com/Adriele-Almeida/novo" },
-            { id: 3, name: "Projeto ChatGPT", repo: "projeto-chatGPT", descodificado: "https://adriele-almeida.github.io/projeto-chatGPT/", github: "https://github.com/Adriele-Almeida/projeto-chatGPT" },
-            { id: 4, name: "ManyChat App Site Landing Page", repo: "ManyChat---App-Site---Landing-Page-", descodificado: "https://adriele-almeida.github.io/ManyChat---App-Site---Landing-Page-/", github: "https://github.com/Adriele-Almeida/ManyChat---App-Site---Landing-Page-" },
-            { id: 5, name: "Guia GitHub 2", repo: "guia-github2", descodificado: "https://adriele-almeida.github.io/guia-github2/", github: "https://github.com/Adriele-Almeida/guia-github2" },
-            { id: 6, name: "Código Alerta", repo: "codigo-alerta", descodificado: "https://adriele-almeida.github.io/codigo-alerta/", github: "https://github.com/Adriele-Almeida/codigo-alerta" },
-            { id: 7, name: "Conteúdo", repo: "conteudo", descodificado: "https://adriele-almeida.github.io/conteudo/", github: "https://github.com/Adriele-Almeida/conteudo" },
-            { id: 8, name: "Estrategista Digital", repo: "estrategista-digital", descodificado: "https://adriele-almeida.github.io/estrategista-digital/", github: "https://github.com/Adriele-Almeida/estrategista-digital" },
-            { id: 9, name: "Método de Gravação de Curso App", repo: "Metodo-de-Grava-o-de-Curso-APP", descodificado: "https://adriele-almeida.github.io/Metodo-de-Grava-o-de-Curso-APP/", github: "https://github.com/Adriele-Almeida/Metodo-de-Grava-o-de-Curso-APP" },
-            { id: 10, name: "Claude Descodificado", repo: "Claude-Descodificado", descodificado: "https://adriele-almeida.github.io/Claude-Descodificado/", github: "https://github.com/Adriele-Almeida/Claude-Descodificado" },
-            { id: 11, name: "Rascunho 02", repo: "rascunho-02", descodificado: "https://adriele-almeida.github.io/rascunho-02/", github: "https://github.com/Adriele-Almeida/rascunho-02" },
-            { id: 12, name: "Produtividade", repo: "produtividade", descodificado: "https://adriele-almeida.github.io/produtividade/", github: "https://github.com/Adriele-Almeida/produtividade" },
-            { id: 13, name: "Gerador Laudo", repo: "gerador-laudo", descodificado: "https://adriele-almeida.github.io/gerador-laudo/", github: "https://github.com/Adriele-Almeida/gerador-laudo" },
-            { id: 14, name: "Home - O Código do Novo Digital", repo: "Home---O-C-digo-do-Novo-Digital", descodificado: "https://adriele-almeida.github.io/Home---O-C-digo-do-Novo-Digital/", github: "https://github.com/Adriele-Almeida/Home---O-C-digo-do-Novo-Digital" },
-            { id: 15, name: "Teste Netlify", repo: "teste-netlify", descodificado: "https://adriele-almeida.github.io/teste-netlify/", github: "https://github.com/Adriele-Almeida/teste-netlify" },
-            { id: 16, name: "Adriele Almeida GitHub IO", repo: "adriele-almeida.github.io", descodificado: "https://adriele-almeida.github.io/", github: "https://github.com/Adriele-Almeida/adriele-almeida.github.io" },
-            { id: 17, name: "Conteúdo 30 Dias", repo: "conteudo-30-dias", descodificado: "https://adriele-almeida.github.io/conteudo-30-dias/", github: "https://github.com/Adriele-Almeida/conteudo-30-dias" },
-            { id: 18, name: "Teste de Campanha", repo: "02-Teste-de-Campanha", descodificado: "https://adriele-almeida.github.io/02-Teste-de-Campanha/", github: "https://github.com/Adriele-Almeida/02-Teste-de-Campanha" },
-            { id: 19, name: "Inteligência Artificial", repo: "Intelig-ncia-Artificial", descodificado: "https://adriele-almeida.github.io/Intelig-ncia-Artificial/", github: "https://github.com/Adriele-Almeida/Intelig-ncia-Artificial" },
-            { id: 20, name: "Instagram Imobiliário", repo: "Instagram-Imobiliario", descodificado: "https://adriele-almeida.github.io/Instagram-Imobiliario/", github: "https://github.com/Adriele-Almeida/Instagram-Imobiliario" },
-            { id: 21, name: "2", repo: "2", descodificado: "https://adriele-almeida.github.io/2/", github: "https://github.com/Adriele-Almeida/2" },
-            { id: 22, name: "Rascunho 03", repo: "rascunho-03", descodificado: "https://adriele-almeida.github.io/rascunho-03/", github: "https://github.com/Adriele-Almeida/rascunho-03" },
-            { id: 23, name: "Hub Projetos", repo: "hub-projetos", descodificado: "https://adriele-almeida.github.io/hub-projetos/", github: "https://github.com/Adriele-Almeida/hub-projetos" },
-            { id: 24, name: "Ordem Progresso", repo: "ordem-progresso", descodificado: "https://adriele-almeida.github.io/ordem-progresso/", github: "https://github.com/Adriele-Almeida/ordem-progresso" },
-            { id: 25, name: "App Loja ClimaBet", repo: "app-lojaclimabet", descodificado: "https://adriele-almeida.github.io/app-lojaclimabet/", github: "https://github.com/Adriele-Almeida/app-lojaclimabet" },
-            { id: 26, name: "Novo Código", repo: "Novo-Codigo", descodificado: "https://adriele-almeida.github.io/Novo-Codigo/", github: "https://github.com/Adriele-Almeida/Novo-Codigo" },
-            { id: 27, name: "Receita de Massa", repo: "Receita-de-Massa-", descodificado: "https://adriele-almeida.github.io/Receita-de-Massa-/", github: "https://github.com/Adriele-Almeida/Receita-de-Massa-" },
-            { id: 29, name: "Arquiteto de Iscas", repo: "Arquiteto-de-iscas", descodificado: "https://adriele-almeida.github.io/Arquiteto-de-iscas/", github: "https://github.com/Adriele-Almeida/Arquiteto-de-iscas" },
-            { id: 30, name: "Guia GitHub Passo a Passo", repo: "Guia-Github-Passo-a-Passo", descodificado: "https://adriele-almeida.github.io/Guia-Github-Passo-a-Passo/", github: "https://github.com/Adriele-Almeida/Guia-Github-Passo-a-Passo" },
-            { id: 31, name: "Planilha Educação", repo: "planilha-educacao", descodificado: "https://adriele-almeida.github.io/planilha-educacao/", github: "https://github.com/Adriele-Almeida/planilha-educacao" },
-            { id: 32, name: "Guia GitHub", repo: "Guia-Github", descodificado: "https://adriele-almeida.github.io/Guia-Github/", github: "https://github.com/Adriele-Almeida/Guia-Github" },
-            { id: 33, name: "Dossiê", repo: "dossie", descodificado: "https://adriele-almeida.github.io/dossie/", github: "https://github.com/Adriele-Almeida/dossie" },
-            { id: 34, name: "Ferramentas", repo: "ferramentas", descodificado: "https://adriele-almeida.github.io/ferramentas/", github: "https://github.com/Adriele-Almeida/ferramentas" },
-            { id: 35, name: "4", repo: "4", descodificado: "https://adriele-almeida.github.io/4/", github: "https://github.com/Adriele-Almeida/4" },
-            { id: 36, name: "3", repo: "3", descodificado: "https://adriele-almeida.github.io/3/", github: "https://github.com/Adriele-Almeida/3" },
-            { id: 37, name: "1", repo: "1", descodificado: "https://adriele-almeida.github.io/1/", github: "https://github.com/Adriele-Almeida/1" },
-            { id: 38, name: "Template Automático", repo: "template-automatico", descodificado: "https://adriele-almeida.github.io/template-automatico/", github: "https://github.com/Adriele-Almeida/template-automatico" },
-            { id: 39, name: "Guia Prático Instagram 2026", repo: "rascunho-01", descodificado: "https://adriele-almeida.github.io/rascunho-01/", github: "https://github.com/Adriele-Almeida/rascunho-01" },
-            { id: 40, name: "Story Template", repo: "story-template", descodificado: "https://adriele-almeida.github.io/story-template/", github: "https://github.com/Adriele-Almeida/story-template" },
-            { id: 41, name: "Produtividade 2", repo: "produtividade2", descodificado: "https://adriele-almeida.github.io/produtividade2/", github: "https://github.com/Adriele-Almeida/produtividade2" },
-            { id: 42, name: "GPTs", repo: "gpts", descodificado: "https://adriele-almeida.github.io/gpts/", github: "https://github.com/Adriele-Almeida/gpts" },
-            { id: 43, name: "Hub GPTs", repo: "Hub-GPTs", descodificado: "https://adriele-almeida.github.io/Hub-GPTs/", github: "https://github.com/Adriele-Almeida/Hub-GPTs" },
-            { id: 44, name: "Prompt", repo: "prompt", descodificado: "https://adriele-almeida.github.io/prompt/", github: "https://github.com/Adriele-Almeida/prompt" },
-            { id: 45, name: "Instagram Zero", repo: "instagram-zero", descodificado: "https://adriele-almeida.github.io/instagram-zero/", github: "https://github.com/Adriele-Almeida/instagram-zero" },
-            { id: 46, name: "Conteúdo Novo", repo: "conteudo-novo", descodificado: "https://adriele-almeida.github.io/conteudo-novo/", github: "https://github.com/Adriele-Almeida/conteudo-novo" },
-            { id: 47, name: "30 Dias Positivo", repo: "30-dias-positivo", descodificado: "https://adriele-almeida.github.io/30-dias-positivo/", github: "https://github.com/Adriele-Almeida/30-dias-positivo" },
-            { id: 48, name: "Card Estúdio", repo: "card-estudio", descodificado: "https://adriele-almeida.github.io/card-estudio/", github: "https://github.com/Adriele-Almeida/card-estudio" },
-            { id: 49, name: "Público Renda Extra", repo: "Publico-Renda-extra", descodificado: "https://adriele-almeida.github.io/Publico-Renda-extra/", github: "https://github.com/Adriele-Almeida/Publico-Renda-extra" },
-            { id: 50, name: "Grupo Oficial Alunos", repo: "Grupo-Oficial-Alunos", descodificado: "https://adriele-almeida.github.io/Grupo-Oficial-Alunos/", github: "https://github.com/Adriele-Almeida/Grupo-Oficial-Alunos" },
-            { id: 51, name: "Fluxo", repo: "fluxo", descodificado: "https://adriele-almeida.github.io/fluxo/", github: "https://github.com/Adriele-Almeida/fluxo" },
-            { id: 52, name: "Sistema", repo: "sistema", descodificado: "https://adriele-almeida.github.io/sistema/", github: "https://github.com/Adriele-Almeida/sistema" },
-            { id: 53, name: "Iron Briefing", repo: "iron-briefing", descodificado: "https://adriele-almeida.github.io/iron-briefing/", github: "https://github.com/Adriele-Almeida/iron-briefing" },
-            { id: 54, name: "Estudo", repo: "estudo", descodificado: "https://adriele-almeida.github.io/estudo/", github: "https://github.com/Adriele-Almeida/estudo" },
-            { id: 55, name: "JM Canva", repo: "JM-canva", descodificado: "https://adriele-almeida.github.io/JM-canva/", github: "https://github.com/Adriele-Almeida/JM-canva" },
-            { id: 56, name: "Ebook 1", repo: "ebook-1", descodificado: "https://adriele-almeida.github.io/ebook-1/", github: "https://github.com/Adriele-Almeida/ebook-1" },
-            { id: 57, name: "Ebook 2", repo: "ebook-2", descodificado: "https://adriele-almeida.github.io/ebook-2/", github: "https://github.com/Adriele-Almeida/ebook-2" },
-            { id: 58, name: "Ebook 3", repo: "ebook-3", descodificado: "https://adriele-almeida.github.io/ebook-3/", github: "https://github.com/Adriele-Almeida/ebook-3" },
-            { id: 59, name: "Fluxo Conteúdo", repo: "fluxo-conteudo", descodificado: "https://adriele-almeida.github.io/fluxo-conteudo/", github: "https://github.com/Adriele-Almeida/fluxo-conteudo" },
-            { id: 60, name: "Diagramador", repo: "diagramador", descodificado: "https://adriele-almeida.github.io/diagramador/", github: "https://github.com/Adriele-Almeida/diagramador" },
-            { id: 61, name: "Lima", repo: "lima", descodificado: "https://adriele-almeida.github.io/lima/", github: "https://github.com/Adriele-Almeida/lima" },
-            { id: 62, name: "Teste", repo: "teste", descodificado: "https://adriele-almeida.github.io/teste/", github: "https://github.com/Adriele-Almeida/teste" },
-            { id: 63, name: "App Imagem Fácil", repo: "appimagemfacil", descodificado: "https://adriele-almeida.github.io/appimagemfacil/", github: "https://github.com/Adriele-Almeida/appimagemfacil" },
-            { id: 64, name: "Imersão - O Maestro", repo: "Imers-o---O-Maestro", descodificado: "https://adriele-almeida.github.io/Imers-o---O-Maestro/", github: "https://github.com/Adriele-Almeida/Imers-o---O-Maestro" },
-            { id: 65, name: "Quebra Legenda", repo: "quebra-legenda", descodificado: "https://adriele-almeida.github.io/quebra-legenda/", github: "https://github.com/Adriele-Almeida/quebra-legenda" },
-            { id: 66, name: "Repositórios GitHub", repo: "repositorios-github", descodificado: "https://adriele-almeida.github.io/repositorios-github/", github: "https://github.com/Adriele-Almeida/repositorios-github" },
-            { id: 67, name: "Meu Ebook", repo: "meu-ebook", descodificado: "https://adriele-almeida.github.io/meu-ebook/", github: "https://github.com/Adriele-Almeida/meu-ebook" },
-            { id: 68, name: "Dashboard Postagens", repo: "dashboard-postagens", descodificado: "https://adriele-almeida.github.io/dashboard-postagens/", github: "https://github.com/Adriele-Almeida/dashboard-postagens" },
-            { id: 69, name: "Execução", repo: "execucao", descodificado: "https://adriele-almeida.github.io/execucao/", github: "https://github.com/Adriele-Almeida/execucao" },
-            { id: 70, name: "Métricas JM 2026", repo: "metricas-JM-2026", descodificado: "https://adriele-almeida.github.io/metricas-JM-2026/", github: "https://github.com/Adriele-Almeida/metricas-JM-2026" },
-            { id: 71, name: "Meu Hub de Links", repo: "meu-hub-de-links", descodificado: "https://adriele-almeida.github.io/meu-hub-de-links/", github: "https://github.com/Adriele-Almeida/meu-hub-de-links" },
-            { id: 72, name: "Meu Hub de Links 01", repo: "meu-hub-de-links-01", descodificado: "https://adriele-almeida.github.io/meu-hub-de-links-01/", github: "https://github.com/Adriele-Almeida/meu-hub-de-links-01" },
-            { id: 73, name: "Meu Hub de Links 02", repo: "meu-hub-de-links-02", descodificado: "https://adriele-almeida.github.io/meu-hub-de-links-02/", github: "https://github.com/Adriele-Almeida/meu-hub-de-links-02" },
-            { id: 74, name: "Meu Hub de Links V3", repo: "meu-hub-de-links-v3", descodificado: "https://adriele-almeida.github.io/meu-hub-de-links-v3/", github: "https://github.com/Adriele-Almeida/meu-hub-de-links-v3" }
-        ];
+        const SUPABASE_URL = "https://uptzkgvfdycxlqnsgokl.supabase.co";
+        const SUPABASE_KEY = "sb_publishable_9mJj4mF2-IJ5Y5WlSIkp7A_G9a9-f5e";
+        const TABLE = "repositorios-github";
+        const GITHUB_OWNER = "Adriele-Almeida";
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-        // Estado do Aplicativo
+        let rawProjectsData = [];
         let state = {
             searchQuery: "",
-            currentFilter: "all", // "all", "favorites"
-            viewMode: "grid", // "grid", "list"
-            favorites: JSON.parse(localStorage.getItem("descodificado_favs") || "[]")
+            currentFilter: "all",
+            viewMode: "grid"
         };
 
-        // Elementos DOM
         const projectsGrid = document.getElementById("projects-grid");
         const searchInput = document.getElementById("search-input");
         const clearSearchBtn = document.getElementById("clear-search");
@@ -250,8 +161,27 @@
         const noResults = document.getElementById("no-results");
         const toast = document.getElementById("toast");
         const toastMessage = document.getElementById("toast-message");
+        const totalProjects = document.getElementById("stat-total-projects");
 
-        // Função auxiliar para disparar Toast
+        function projectLinks(repo) {
+            const encodedRepo = encodeURIComponent(repo);
+            return {
+                github: `https://github.com/${GITHUB_OWNER}/${encodedRepo}`,
+                descodificado: repo.toLowerCase() === "adriele-almeida.github.io"
+                    ? "https://adriele-almeida.github.io/"
+                    : `https://adriele-almeida.github.io/${encodedRepo}/`
+            };
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? "")
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;")
+                .replaceAll("'", "&#039;");
+        }
+
         function showToast(message) {
             toastMessage.textContent = message;
             toast.classList.remove("translate-y-20", "opacity-0");
@@ -262,34 +192,106 @@
             }, 2500);
         }
 
-        // Favoritar / Desfavoritar projeto
-        function toggleFavorite(id) {
-            const index = state.favorites.indexOf(id);
-            if (index > -1) {
-                state.favorites.splice(index, 1);
-                showToast("Removido dos favoritos!");
-            } else {
-                state.favorites.push(id);
-                showToast("Adicionado aos favoritos!");
+        async function migrateLegacyFavorites() {
+            const migrationKey = "repositorios_github_favs_migrated_v1";
+            if (localStorage.getItem(migrationKey) === "1") return false;
+
+            let legacyFavorites = [];
+            try {
+                legacyFavorites = JSON.parse(localStorage.getItem("descodificado_favs") || "[]");
+            } catch {
+                legacyFavorites = [];
             }
-            localStorage.setItem("descodificado_favs", JSON.stringify(state.favorites));
+
+            const ids = legacyFavorites
+                .map(Number)
+                .filter(Number.isFinite);
+
+            if (ids.length > 0) {
+                const { error } = await supabaseClient
+                    .from(TABLE)
+                    .update({ favorite: true })
+                    .in("id", ids);
+
+                if (error) {
+                    console.error("Erro ao migrar favoritos antigos:", error);
+                    return false;
+                }
+            }
+
+            localStorage.setItem(migrationKey, "1");
+            return ids.length > 0;
+        }
+
+        async function loadProjects({ migrateFavorites = false } = {}) {
+            const { data, error } = await supabaseClient
+                .from(TABLE)
+                .select("id,name,repo,favorite");
+
+            if (error) {
+                console.error("Erro ao carregar projetos:", error);
+                showToast("Erro ao carregar projetos.");
+                return;
+            }
+
+            rawProjectsData = (data || []).map(project => ({
+                ...project,
+                ...projectLinks(project.repo)
+            }));
+
+            totalProjects.textContent = rawProjectsData.length;
+
+            if (migrateFavorites) {
+                const migrated = await migrateLegacyFavorites();
+                if (migrated) {
+                    await loadProjects({ migrateFavorites: false });
+                    return;
+                }
+            }
+
             render();
         }
 
-        // Copiar URL para Área de Transferência
-        function copyUrl(url, type) {
-            const tempInput = document.createElement("input");
-            tempInput.value = url;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand("copy");
-            document.body.removeChild(tempInput);
+        async function toggleFavorite(id) {
+            const project = rawProjectsData.find(item => item.id === id);
+            if (!project) return;
+
+            const previousValue = project.favorite;
+            const newValue = !previousValue;
+            project.favorite = newValue;
+            render();
+
+            const { error } = await supabaseClient
+                .from(TABLE)
+                .update({ favorite: newValue })
+                .eq("id", id);
+
+            if (error) {
+                console.error("Erro ao atualizar favorito:", error);
+                project.favorite = previousValue;
+                render();
+                showToast("Não foi possível atualizar o favorito.");
+                return;
+            }
+
+            showToast(newValue ? "Adicionado aos favoritos!" : "Removido dos favoritos!");
+        }
+
+        async function copyUrl(url, type) {
+            try {
+                await navigator.clipboard.writeText(url);
+            } catch {
+                const tempInput = document.createElement("input");
+                tempInput.value = url;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand("copy");
+                document.body.removeChild(tempInput);
+            }
             showToast(`Link do ${type} copiado!`);
         }
 
-        // Renderização Dinâmica dos Cards / Linhas
         function render() {
-            // 1. Filtragem por busca e categorias
             let filtered = rawProjectsData.filter(proj => {
                 const normalizeText = value => String(value || "")
                     .normalize("NFD")
@@ -306,14 +308,12 @@
                 ].join(" "));
 
                 const matchesSearch = searchable.includes(query);
-                
                 if (state.currentFilter === "favorites") {
-                    return matchesSearch && state.favorites.includes(proj.id);
+                    return matchesSearch && proj.favorite;
                 }
                 return matchesSearch;
             });
 
-            // 2. Ordem fixa: nomes em A-Z; repositórios iniciados por número ficam no final
             const normalizeSort = value => String(value || "")
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "")
@@ -334,38 +334,36 @@
                 );
             });
 
-            // 3. Atualizar Layout (Grid vs Lista)
             projectsGrid.innerHTML = "";
             if (filtered.length === 0) {
                 projectsGrid.classList.add("hidden");
                 noResults.classList.remove("hidden");
                 return;
-            } else {
-                projectsGrid.classList.remove("hidden");
-                noResults.classList.add("hidden");
             }
+
+            projectsGrid.classList.remove("hidden");
+            noResults.classList.add("hidden");
 
             if (state.viewMode === "grid") {
                 projectsGrid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 transition-all duration-300";
-                
+
                 filtered.forEach(proj => {
-                    const isFav = state.favorites.includes(proj.id);
                     const card = document.createElement("div");
                     card.className = "bg-gray-900/60 border border-gray-800/80 rounded-2xl p-[18px] sm:p-5 hover:border-brand-500/50 hover:bg-gray-900 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative flex flex-col justify-between min-h-[176px]";
-                    
+
                     card.innerHTML = `
                         <div class="flex items-start justify-between gap-4 mb-5">
                             <h3 class="text-[17px] sm:text-lg font-bold text-gray-100 group-hover:text-brand-400 transition line-clamp-2 leading-snug pt-0.5">
-                                ${proj.name}
+                                ${escapeHtml(proj.name)}
                             </h3>
                             <button onclick="toggleFavorite(${proj.id})" class="shrink-0 h-9 w-9 rounded-lg inline-flex items-center justify-center text-gray-500 hover:text-amber-400 hover:bg-gray-800/80 transition" title="Favoritar" aria-label="Favoritar">
-                                <i class="${isFav ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-base"></i>
+                                <i class="${proj.favorite ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-base"></i>
                             </button>
                         </div>
 
                         <div class="space-y-2 mt-auto">
                             <div class="flex items-stretch gap-2">
-                                <a href="${proj.descodificado}" target="_blank" class="h-11 flex-1 inline-flex items-center justify-center gap-2 px-3 bg-brand-600 hover:bg-brand-500 text-white text-sm font-bold rounded-xl transition duration-200">
+                                <a href="${proj.descodificado}" target="_blank" rel="noopener noreferrer" class="h-11 flex-1 inline-flex items-center justify-center gap-2 px-3 bg-brand-600 hover:bg-brand-500 text-white text-sm font-bold rounded-xl transition duration-200">
                                     <i class="fa-solid fa-square-arrow-up-right text-xs"></i>
                                     <span>Acessar Site</span>
                                 </a>
@@ -375,7 +373,7 @@
                             </div>
 
                             <div class="flex items-stretch gap-2">
-                                <a href="${proj.github}" target="_blank" class="h-11 flex-1 inline-flex items-center justify-center gap-2 px-3 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-semibold rounded-xl border border-gray-700/60 transition duration-200">
+                                <a href="${proj.github}" target="_blank" rel="noopener noreferrer" class="h-11 flex-1 inline-flex items-center justify-center gap-2 px-3 bg-gray-800 hover:bg-gray-700 text-gray-200 text-sm font-semibold rounded-xl border border-gray-700/60 transition duration-200">
                                     <i class="fa-brands fa-github text-sm"></i>
                                     <span>Código GitHub</span>
                                 </a>
@@ -388,26 +386,23 @@
                     projectsGrid.appendChild(card);
                 });
             } else {
-                // Layout de Lista
                 projectsGrid.className = "flex flex-col gap-3 transition-all duration-300";
 
                 filtered.forEach(proj => {
-                    const isFav = state.favorites.includes(proj.id);
                     const listRow = document.createElement("div");
                     listRow.className = "bg-gray-900/60 border border-gray-800/80 rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-brand-500/40 hover:bg-gray-900 transition duration-200";
-                    
+
                     listRow.innerHTML = `
                         <div class="flex items-center justify-between gap-3 md:min-w-[280px]">
-                            <h3 class="text-[15px] font-bold text-gray-100">${proj.name}</h3>
+                            <h3 class="text-[15px] font-bold text-gray-100">${escapeHtml(proj.name)}</h3>
                             <button onclick="toggleFavorite(${proj.id})" class="shrink-0 h-9 w-9 rounded-lg inline-flex items-center justify-center text-gray-500 hover:text-amber-400 hover:bg-gray-800/80 transition" title="Favoritar" aria-label="Favoritar">
-                                <i class="${isFav ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-base"></i>
+                                <i class="${proj.favorite ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-base"></i>
                             </button>
                         </div>
 
                         <div class="flex flex-wrap items-center gap-3">
-                            <!-- Botões Site -->
                             <div class="flex items-center bg-gray-950/80 rounded-xl border border-gray-800/60 p-1">
-                                <a href="${proj.descodificado}" target="_blank" class="px-3 py-1.5 bg-brand-600/90 hover:bg-brand-500 text-white text-xs font-semibold rounded-lg transition">
+                                <a href="${proj.descodificado}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-brand-600/90 hover:bg-brand-500 text-white text-xs font-semibold rounded-lg transition">
                                     <i class="fa-solid fa-square-arrow-up-right mr-1.5"></i>Site
                                 </a>
                                 <button onclick="copyUrl('${proj.descodificado}', 'Site')" class="p-1.5 text-gray-400 hover:text-white transition ml-1" title="Copiar Link do Site">
@@ -415,9 +410,8 @@
                                 </button>
                             </div>
 
-                            <!-- Botões GitHub -->
                             <div class="flex items-center bg-gray-950/80 rounded-xl border border-gray-800/60 p-1">
-                                <a href="${proj.github}" target="_blank" class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-semibold rounded-lg transition">
+                                <a href="${proj.github}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-semibold rounded-lg transition">
                                     <i class="fa-brands fa-github mr-1.5"></i>GitHub
                                 </a>
                                 <button onclick="copyUrl('${proj.github}', 'GitHub')" class="p-1.5 text-gray-400 hover:text-white transition ml-1" title="Copiar Link do GitHub">
@@ -431,7 +425,6 @@
             }
         }
 
-        // Ouvintes de Evento (Filtros e Busca)
         searchInput.addEventListener("input", (e) => {
             state.searchQuery = e.target.value;
             if (state.searchQuery.trim() !== "") {
@@ -449,7 +442,6 @@
             render();
         });
 
-        // Toggle Grid/List
         viewGridBtn.addEventListener("click", () => {
             state.viewMode = "grid";
             viewGridBtn.className = "h-11 w-11 rounded-lg bg-gray-800 text-brand-400 transition flex items-center justify-center";
@@ -464,7 +456,6 @@
             render();
         });
 
-        // Filtro "Todos"
         filterAllBtn.addEventListener("click", () => {
             state.currentFilter = "all";
             filterAllBtn.className = "flex-1 h-11 px-4 rounded-lg text-sm font-semibold bg-brand-600 text-white transition duration-200";
@@ -472,7 +463,6 @@
             render();
         });
 
-        // Filtro "Favoritos"
         filterFavsBtn.addEventListener("click", () => {
             state.currentFilter = "favorites";
             filterFavsBtn.className = "flex-1 h-11 px-4 rounded-lg text-sm font-semibold bg-brand-600 text-white transition duration-200 flex items-center justify-center gap-2";
@@ -480,11 +470,21 @@
             render();
         });
 
-        // Inicializar aplicação
+        supabaseClient
+            .channel("repositorios-github-realtime")
+            .on(
+                "postgres_changes",
+                { event: "*", schema: "public", table: TABLE },
+                () => loadProjects({ migrateFavorites: false })
+            )
+            .subscribe((status) => {
+                if (status === "CHANNEL_ERROR") {
+                    console.error("Erro na conexão Realtime do Supabase.");
+                }
+            });
+
         document.addEventListener("DOMContentLoaded", () => {
-            const totalProjects = document.getElementById("stat-total-projects");
-            if (totalProjects) totalProjects.textContent = rawProjectsData.length;
-            render();
+            loadProjects({ migrateFavorites: true });
         });
     </script>
 </body>
