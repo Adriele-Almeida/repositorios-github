@@ -96,7 +96,7 @@
                 <input
                     type="text"
                     id="search-input"
-                    placeholder="Buscar projeto por nome ou link..."
+                    placeholder="Buscar por nome do projeto ou repositório..."
                     class="w-full h-[54px] pl-11 pr-11 bg-gray-900/80 border border-gray-800 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 rounded-xl text-sm sm:text-[15px] text-gray-200 placeholder-gray-500 outline-none transition duration-200"
                 >
                 <button id="clear-search" class="absolute inset-y-0 right-0 w-11 flex items-center justify-center text-gray-500 hover:text-gray-300 hidden" aria-label="Limpar busca">
@@ -114,6 +114,10 @@
                         <span>Favoritos</span>
                     </button>
                 </div>
+
+                <button id="sort-toggle" class="shrink-0 h-[52px] w-[52px] rounded-xl bg-gray-900 border border-gray-800/80 text-gray-400 hover:text-white hover:bg-gray-800 transition flex items-center justify-center" title="Ordenar alfabeticamente" aria-label="Alternar ordenação">
+                    <span class="text-[13px] font-extrabold tracking-tight">A↑</span>
+                </button>
 
                 <div class="shrink-0 inline-flex rounded-xl bg-gray-900 p-1 border border-gray-800/80">
                     <button id="view-grid" class="h-11 w-11 rounded-lg bg-gray-800 text-brand-400 transition flex items-center justify-center" title="Visualização em Grade" aria-label="Visualização em Grade">
@@ -148,7 +152,8 @@
         let state = {
             searchQuery: "",
             currentFilter: "all",
-            viewMode: "grid"
+            viewMode: "grid",
+            sortMode: "recent"
         };
 
         const projectsGrid = document.getElementById("projects-grid");
@@ -158,6 +163,7 @@
         const viewListBtn = document.getElementById("view-list");
         const filterAllBtn = document.getElementById("filter-all");
         const filterFavsBtn = document.getElementById("filter-favorites");
+        const sortToggleBtn = document.getElementById("sort-toggle");
         const noResults = document.getElementById("no-results");
         const toast = document.getElementById("toast");
         const toastMessage = document.getElementById("toast-message");
@@ -190,6 +196,52 @@
                 toast.classList.add("translate-y-20", "opacity-0");
                 toast.classList.remove("translate-y-0", "opacity-100");
             }, 2500);
+        }
+
+        function parseTimestamp(value) {
+            if (!value) return null;
+            const timestamp = Date.parse(value);
+            return Number.isFinite(timestamp) ? timestamp : null;
+        }
+
+        function getActivityTimestamp(project) {
+            const candidates = [
+                parseTimestamp(project.added_at),
+                parseTimestamp(project.github_updated_at)
+            ].filter(Number.isFinite);
+
+            if (candidates.length > 0) {
+                return Math.max(...candidates);
+            }
+
+            return parseTimestamp(project.github_created_at);
+        }
+
+        function formatActivity(project) {
+            const timestamp = getActivityTimestamp(project);
+            if (!Number.isFinite(timestamp)) return "";
+
+            return new Intl.DateTimeFormat("pt-BR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: false,
+                timeZone: "America/Sao_Paulo"
+            }).format(new Date(timestamp)).replace(",", " •");
+        }
+
+        function updateSortButton() {
+            const alphabetical = state.sortMode === "alphabetical";
+
+            sortToggleBtn.className = alphabetical
+                ? "shrink-0 h-[52px] w-[52px] rounded-xl bg-brand-600 border border-brand-500 text-white transition flex items-center justify-center shadow-lg shadow-brand-500/10"
+                : "shrink-0 h-[52px] w-[52px] rounded-xl bg-gray-900 border border-gray-800/80 text-gray-400 hover:text-white hover:bg-gray-800 transition flex items-center justify-center";
+
+            sortToggleBtn.title = alphabetical
+                ? "Ordem alfabética ativa. Clique para ordenar por atividade recente"
+                : "Ordenar alfabeticamente";
         }
 
         async function migrateLegacyFavorites() {
@@ -226,7 +278,7 @@
         async function loadProjects({ migrateFavorites = false } = {}) {
             const { data, error } = await supabaseClient
                 .from(TABLE)
-                .select("id,name,repo,favorite");
+                .select("id,name,repo,favorite,added_at,github_created_at,github_updated_at");
 
             if (error) {
                 console.error("Erro ao carregar projetos:", error);
@@ -291,21 +343,37 @@
             showToast(`Link do ${type} copiado!`);
         }
 
-        function render() {
-            let filtered = rawProjectsData.filter(proj => {
-                const normalizeText = value => String(value || "")
-                    .normalize("NFD")
-                    .replace(/[\u0300-\u036f]/g, "")
-                    .toLowerCase()
-                    .trim();
+        function normalizeText(value) {
+            return String(value || "")
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .toLowerCase()
+                .trim();
+        }
 
+        function compareAlphabetical(a, b) {
+            const aName = String(a.name || "").trim();
+            const bName = String(b.name || "").trim();
+            const aStartsNumber = /^\d/.test(aName);
+            const bStartsNumber = /^\d/.test(bName);
+
+            if (aStartsNumber !== bStartsNumber) {
+                return aStartsNumber ? 1 : -1;
+            }
+
+            return normalizeText(aName).localeCompare(
+                normalizeText(bName),
+                "pt-BR",
+                { numeric: true, sensitivity: "base" }
+            );
+        }
+
+        function render() {
+            updateSortButton();
+
+            let filtered = rawProjectsData.filter(proj => {
                 const query = normalizeText(state.searchQuery);
-                const searchable = normalizeText([
-                    proj.name,
-                    proj.repo,
-                    proj.descodificado,
-                    proj.github
-                ].join(" "));
+                const searchable = normalizeText([proj.name, proj.repo].join(" "));
 
                 const matchesSearch = searchable.includes(query);
                 if (state.currentFilter === "favorites") {
@@ -314,25 +382,20 @@
                 return matchesSearch;
             });
 
-            const normalizeSort = value => String(value || "")
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g, "")
-                .toLowerCase();
+            if (state.sortMode === "alphabetical") {
+                filtered.sort(compareAlphabetical);
+            } else {
+                filtered.sort((a, b) => {
+                    const aActivity = getActivityTimestamp(a) ?? 0;
+                    const bActivity = getActivityTimestamp(b) ?? 0;
 
-            filtered.sort((a, b) => {
-                const aStartsNumber = /^\d/.test(a.name.trim());
-                const bStartsNumber = /^\d/.test(b.name.trim());
+                    if (aActivity !== bActivity) {
+                        return bActivity - aActivity;
+                    }
 
-                if (aStartsNumber !== bStartsNumber) {
-                    return aStartsNumber ? 1 : -1;
-                }
-
-                return normalizeSort(a.name).localeCompare(
-                    normalizeSort(b.name),
-                    "pt-BR",
-                    { numeric: true, sensitivity: "base" }
-                );
-            });
+                    return compareAlphabetical(a, b);
+                });
+            }
 
             projectsGrid.innerHTML = "";
             if (filtered.length === 0) {
@@ -348,14 +411,18 @@
                 projectsGrid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 transition-all duration-300";
 
                 filtered.forEach(proj => {
+                    const activity = formatActivity(proj);
                     const card = document.createElement("div");
                     card.className = "bg-gray-900/60 border border-gray-800/80 rounded-2xl p-[18px] sm:p-5 hover:border-brand-500/50 hover:bg-gray-900 transition-all duration-300 hover:shadow-xl hover:shadow-brand-500/5 group relative flex flex-col justify-between min-h-[176px]";
 
                     card.innerHTML = `
                         <div class="flex items-start justify-between gap-4 mb-5">
-                            <h3 class="text-[17px] sm:text-lg font-bold text-gray-100 group-hover:text-brand-400 transition line-clamp-2 leading-snug pt-0.5">
-                                ${escapeHtml(proj.name)}
-                            </h3>
+                            <div class="min-w-0 flex-1">
+                                <h3 class="text-[17px] sm:text-lg font-bold text-gray-100 group-hover:text-brand-400 transition line-clamp-2 leading-snug pt-0.5">
+                                    ${escapeHtml(proj.name)}
+                                </h3>
+                                ${activity ? `<p class="mt-1.5 text-[11px] leading-none font-medium text-gray-500">${escapeHtml(activity)}</p>` : ""}
+                            </div>
                             <button onclick="toggleFavorite(${proj.id})" class="shrink-0 h-9 w-9 rounded-lg inline-flex items-center justify-center text-gray-500 hover:text-amber-400 hover:bg-gray-800/80 transition" title="Favoritar" aria-label="Favoritar">
                                 <i class="${proj.favorite ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-base"></i>
                             </button>
@@ -389,12 +456,16 @@
                 projectsGrid.className = "flex flex-col gap-3 transition-all duration-300";
 
                 filtered.forEach(proj => {
+                    const activity = formatActivity(proj);
                     const listRow = document.createElement("div");
                     listRow.className = "bg-gray-900/60 border border-gray-800/80 rounded-xl p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:border-brand-500/40 hover:bg-gray-900 transition duration-200";
 
                     listRow.innerHTML = `
-                        <div class="flex items-center justify-between gap-3 md:min-w-[280px]">
-                            <h3 class="text-[15px] font-bold text-gray-100">${escapeHtml(proj.name)}</h3>
+                        <div class="flex items-start justify-between gap-3 md:min-w-[280px]">
+                            <div class="min-w-0">
+                                <h3 class="text-[15px] font-bold text-gray-100">${escapeHtml(proj.name)}</h3>
+                                ${activity ? `<p class="mt-1.5 text-[11px] leading-none font-medium text-gray-500">${escapeHtml(activity)}</p>` : ""}
+                            </div>
                             <button onclick="toggleFavorite(${proj.id})" class="shrink-0 h-9 w-9 rounded-lg inline-flex items-center justify-center text-gray-500 hover:text-amber-400 hover:bg-gray-800/80 transition" title="Favoritar" aria-label="Favoritar">
                                 <i class="${proj.favorite ? 'fa-solid text-amber-400' : 'fa-regular'} fa-star text-base"></i>
                             </button>
@@ -439,6 +510,11 @@
             searchInput.value = "";
             state.searchQuery = "";
             clearSearchBtn.classList.add("hidden");
+            render();
+        });
+
+        sortToggleBtn.addEventListener("click", () => {
+            state.sortMode = state.sortMode === "recent" ? "alphabetical" : "recent";
             render();
         });
 
