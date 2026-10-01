@@ -275,6 +275,30 @@
             return ids.length > 0;
         }
 
+        let syncInFlight = false;
+
+        async function syncFromGitHub() {
+            if (syncInFlight) return;
+            syncInFlight = true;
+
+            try {
+                const { error } = await supabaseClient.functions.invoke("sync-repositorios-github", {
+                    body: { source: "dashboard" }
+                });
+
+                if (error) {
+                    console.error("Erro ao sincronizar com GitHub:", error);
+                    return;
+                }
+
+                await loadProjects({ migrateFavorites: false });
+            } catch (error) {
+                console.error("Erro ao sincronizar com GitHub:", error);
+            } finally {
+                syncInFlight = false;
+            }
+        }
+
         async function loadProjects({ migrateFavorites = false } = {}) {
             const { data, error } = await supabaseClient
                 .from(TABLE)
@@ -559,8 +583,15 @@
                 }
             });
 
-        document.addEventListener("DOMContentLoaded", () => {
-            loadProjects({ migrateFavorites: true });
+        document.addEventListener("DOMContentLoaded", async () => {
+            await loadProjects({ migrateFavorites: true });
+            syncFromGitHub();
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") {
+                syncFromGitHub();
+            }
         });
     </script>
 </body>
