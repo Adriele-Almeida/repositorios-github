@@ -276,10 +276,14 @@
         }
 
         let syncInFlight = false;
+        let lastSyncAt = 0;
+        const SYNC_MIN_INTERVAL_MS = 60_000;
 
-        async function syncFromGitHub() {
-            if (syncInFlight) return;
+        async function syncFromGitHub({ force = false } = {}) {
+            const now = Date.now();
+            if (syncInFlight || (!force && now - lastSyncAt < SYNC_MIN_INTERVAL_MS)) return;
             syncInFlight = true;
+            lastSyncAt = now;
 
             try {
                 const { error } = await supabaseClient.functions.invoke("sync-repositorios-github", {
@@ -585,7 +589,7 @@
 
         document.addEventListener("DOMContentLoaded", async () => {
             await loadProjects({ migrateFavorites: true });
-            syncFromGitHub();
+            syncFromGitHub({ force: true });
         });
 
         document.addEventListener("visibilitychange", () => {
