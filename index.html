@@ -283,21 +283,21 @@
             const now = Date.now();
             if (syncInFlight || (!force && now - lastSyncAt < SYNC_MIN_INTERVAL_MS)) return;
             syncInFlight = true;
-            lastSyncAt = now;
 
             try {
-                const { error } = await supabaseClient.functions.invoke("sync-repositorios-github", {
+                const { data, error } = await supabaseClient.functions.invoke("sync-repositorios-github", {
                     body: { source: "dashboard" }
                 });
 
-                if (error) {
-                    console.error("Erro ao sincronizar com GitHub:", error);
-                    return;
+                if (error || data?.ok !== true) {
+                    throw error || new Error(data?.error || "Sincronização incompleta");
                 }
 
+                lastSyncAt = Date.now();
                 await loadProjects({ migrateFavorites: false });
             } catch (error) {
                 console.error("Erro ao sincronizar com GitHub:", error);
+                showToast("Falha ao atualizar projetos. Tente novamente.");
             } finally {
                 syncInFlight = false;
             }
